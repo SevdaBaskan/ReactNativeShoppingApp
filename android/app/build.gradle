@@ -51,6 +51,9 @@ react {
     // hermesFlags = ["-O", "-output-source-map"]
 
     /* Autolinking */
+    project.ext.vectoricons = [
+      iconFontNames: ['MaterialCommunityIcons.ttf', 'FontAwesome.ttf', 'AntDesign.ttf'] // Add other font files as needed
+]
     autolinkLibrariesWithApp()
 }
 
@@ -117,3 +120,4 @@ dependencies {
         implementation jscFlavor
     }
 }
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

@@ -1,45 +1,45 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import 'react-native-gesture-handler';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import LoginScreen from './src/screens/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import KategorilerScreen from './src/screens/Kategoriler';
+import KategoriDetayScreen from './src/screens/KategoriDetay';
+
+const Stack = createStackNavigator();
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Giriş' }} />
+        <Stack.Screen name="Register" component={RegisterScreen} options={{ title: 'Kayıt Ol' }}/>
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Ana Sayfa' }} />
+        <Stack.Screen name="Kategori" component={KategorilerScreen} options={{ title: 'Kategoriler' }} />
+        <Stack.Screen name="KategoriDetay" component={KategoriDetayScreen} options={{ title: 'Kategori Detayı' }} />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;
+
+
+/*üsteki headı istemiyorsam <Stack.Screen 
+  name="Login" 
+  component={LoginScreen} 
+  options={{ headerShown: false }}  Başlığı tamamen gizler
+/> şeklinde yapabilirim
+veya sadece geri butonunu kaldırmak istiyorsam options={{ headerLeft: () => null }} kullanabilirim. Bu, başlığı gösterir ancak geri butonunu kaldırır.
+
+
+<Stack.Navigator 
+  initialRouteName="Login"
+  screenOptions={{ headerShown: false }}  Tüm ekranlarda başlığı gizler
+>
+  { ... ekranlar ... }
+</Stack.Navigator>*/

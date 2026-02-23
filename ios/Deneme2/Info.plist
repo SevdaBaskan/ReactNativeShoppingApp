@@ -27,6 +27,12 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
+	<key>UIAppFonts</key>
+<array>
+    <string>MaterialCommunityIcons.ttf</string>
+    <string>FontAwesome.ttf</string>
+    <string>AntDesign.ttf</string>
+</array>
 	<dict>
 	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
