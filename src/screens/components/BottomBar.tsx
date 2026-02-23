@@ -10,7 +10,7 @@ const BottomBar = ({ navigation }: any) => {
       <TouchableOpacity style={styles.altbarButton} onPress={() => navigation.navigate('Kategori')}>
         <Text style={styles.altbarText}>Kategoriler</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.altbarButton} onPress={() => navigation.navigate('Favori')}>
+      <TouchableOpacity style={styles.altbarButton} onPress={() => navigation.navigate('Favoriler')}>
         <Text style={styles.altbarText}>Favoriler</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.altbarButton} onPress={() => navigation.navigate('Sepet')}>

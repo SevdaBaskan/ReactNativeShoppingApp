@@ -13,9 +13,7 @@ const KategorilerScreen = ({ navigation }: any) => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
-                <Text style={styles.headerTitle}>Kategoriler</Text>
-                
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>                
                 <View style={styles.grid}>
                     {kategoriler.map((kategori) => (
                         <TouchableOpacity 
@@ -49,13 +47,6 @@ const styles = StyleSheet.create({
     scrollContainer: {
         padding: 20,
         paddingBottom: 40,
-    },
-    headerTitle: {
-        fontSize: 26,
-        fontWeight: "bold",
-        marginBottom: 20,
-        textAlign: "center",
-        color: "#333",
     },
     grid: {
         flexDirection: "row",

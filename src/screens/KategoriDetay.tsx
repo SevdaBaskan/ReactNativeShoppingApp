@@ -16,9 +16,7 @@ const KategoriDetay = ({ route, navigation }: any) => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <Text style={styles.headerTitle}>Ürün Detayı</Text>
-                
+            <ScrollView contentContainerStyle={styles.scrollContainer}>                
                 <View style={styles.detailCard}>
                     <Image source={urunResim} style={styles.mainImage} />
                     
