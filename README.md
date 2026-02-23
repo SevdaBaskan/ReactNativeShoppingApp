@@ -1,4 +1,5 @@
 React Native Shop App
+
 Bu proje, React Native temellerini öğrenmek, bileşen mimarisini kavramak ve modern mobil uygulama geliştirme süreçlerini deneyimlemek amacıyla geliştirilmiş temel bir alışveriş uygulamasıdır.
 
 🚀 Özellikler
