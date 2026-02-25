@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text,ScrollView, 
-  TouchableOpacity, StyleSheet, Alert} from 'react-native';
+import { Text, ScrollView, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 const RegisterScreen = ({ navigation }: any) => {
@@ -8,17 +7,47 @@ const RegisterScreen = ({ navigation }: any) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const kullaniciKayit = () => {
+  const kullaniciKayit = async () => {
     if (!name || !email || !password) {
-      Alert.alert("Lütfen tüm alanları doldurun.");
+      Alert.alert("Hata", "Lütfen tüm alanları doldurun.");
       return;
     }
-    navigation.navigate('Login');
+
+    try {
+      console.log("Kayıt isteği gönderiliyor...");
+      
+      const response = await fetch('http://10.0.2.2:3000/kayit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ad_soyad: name,
+          email: email,
+          sifre: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert("Başarılı", "Kayıt işleminiz tamamlandı!", [
+          { text: "Tamam", onPress: () => navigation.navigate('Login') }
+        ]);
+      } else {
+        Alert.alert("Hata", data.error || "Kayıt yapılamadı.");
+      }
+
+    } catch (error) {
+      console.error("Bağlantı hatası:", error);
+      Alert.alert("Bağlantı Hatası", "Sunucuya bağlanılamadı. Node.js backend'in açık olduğundan emin ol.");
+    }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Kayıt Ol</Text>
+      
       <TextInput
         placeholder="Ad Soyad"
         value={name}
@@ -30,6 +59,8 @@ const RegisterScreen = ({ navigation }: any) => {
         placeholder="E-posta"
         value={email}
         onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
         style={styles.input}
       />
 
@@ -41,9 +72,12 @@ const RegisterScreen = ({ navigation }: any) => {
         style={styles.input}
       />
 
-      
-      <TouchableOpacity onPress={kullaniciKayit}>
-        <Text style={styles.linkText}>Kayıt Ol</Text>
+      <TouchableOpacity style={styles.button} onPress={kullaniciKayit}>
+        <Text style={styles.buttonText}>Kayıt Ol</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginTop: 20 }}>
+        <Text style={styles.linkText}>Zaten hesabınız var mı? Giriş Yap</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -51,65 +85,37 @@ const RegisterScreen = ({ navigation }: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "center",
     padding: 20,
     backgroundColor: "#f5f5f5",
   },
-
   title: {
     fontSize: 26,
     fontWeight: "bold",
     marginBottom: 30,
     textAlign: "center",
+    color: "#333",
   },
-
   input: {
     height: 50,
     backgroundColor: "white",
     borderRadius: 10,
     paddingHorizontal: 15,
     marginBottom: 20,
-
+    elevation: 3,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
-
-  passwordContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 20,
-
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-
-  passwordInput: {
-    flex: 1,
-    height: 50,
-  },
-
-  showText: {
-    color: "#4A90E2",
-    fontWeight: "bold",
-  },
-
   button: {
     backgroundColor: "#4A90E2",
-    padding: 14,
+    padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    marginTop: 10,
   },
-
   buttonText: {
     color: "white",
     fontSize: 16,

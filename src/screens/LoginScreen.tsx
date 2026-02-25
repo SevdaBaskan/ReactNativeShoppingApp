@@ -2,18 +2,40 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 
 const LoginScreen = ({ navigation }: any) => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSecure, setIsSecure] = useState(true); 
+  const [isSecure, setIsSecure] = useState(true);
 
-  const  kullaniciGirisi= () => {
+  const kullaniciGirisi = async () => {
     if (!email || !password) {
       Alert.alert("Hata", "Lütfen e-posta ve şifre alanlarını doldurun.");
       return;
     }
-    //navigation.replace('Home');
-    navigation.navigate('Home');
+
+    try {
+      const response = await fetch('http://10.0.2.2:3000/giris', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          sifre: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert("Başarılı", "Hoş geldiniz!");
+        navigation.navigate('Home'); 
+      } else {
+        Alert.alert("Hata", data.error || "Giriş yapılamadı.");
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Bağlantı Hatası", "Sunucuya ulaşılamadı.");
+    }
   };
 
   return (
@@ -50,11 +72,10 @@ const LoginScreen = ({ navigation }: any) => {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-       <Text style={{ textAlign: 'center', marginTop: 15, color: '#4A90E2' }}>
+        <Text style={{ textAlign: 'center', marginTop: 15, color: '#4A90E2' }}>
           Hesabın yok mu? Kayıt Ol
         </Text>
       </TouchableOpacity>
-
     </View>
   );
 };
