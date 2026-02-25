@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomBar from "./components/BottomBar";
+import Icon from 'react-native-vector-icons/Ionicons';
+
 const HomeScreen = ({ navigation }: any) => {
   const urunler = [
     { id: 1, ad: "Mavi Örgü", fiyat: "150 TL", resim: require('../../assets/1.jpg') },
@@ -19,30 +21,38 @@ const HomeScreen = ({ navigation }: any) => {
             <View key={urun.id} style={styles.card}>
               <Image source={urun.resim} style={styles.image} />
               
-              <View style={styles.infoContainer}>
-                <Text style={styles.title} numberOfLines={1}>{urun.ad}</Text>
-                <Text style={styles.fiyat}>{urun.fiyat}</Text>
-                
-                <TouchableOpacity 
-                  style={styles.button}
-                  onPress={() => navigation.navigate('KategoriDetay', { 
-                    urunAd: urun.ad, 
-                    urunFiyat: urun.fiyat,
-                    urunResim: urun.resim
-                  })}
-                >
-                  <Text style={styles.buttonText}>Detaylar</Text>
-                </TouchableOpacity>
+              <View style={styles.info}>
+                <View style={styles.infoContainer}>
+                  <Text style={styles.title} numberOfLines={1}>{urun.ad}</Text>
+                  <Text style={styles.fiyat}>{urun.fiyat}</Text>
+                </View>
+
+                <View style={styles.actionRow}>
+                  <TouchableOpacity 
+                    style={styles.favButton} 
+                    onPress={() => navigation.navigate('Favoriler')}
+                  >
+                    <Image source={require('../../assets/heart.png')} style={{ width: 20, height: 20 }} />
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity 
+                    style={styles.button}
+                    onPress={() => navigation.navigate('KategoriDetay', { 
+                      urunAd: urun.ad, 
+                      urunFiyat: urun.fiyat,
+                      urunResim: urun.resim
+                    })}
+                  >
+                    <Text style={styles.buttonText}>Detay</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           ))}
         </View>
-
-        
       </ScrollView>
       <BottomBar navigation={navigation} />
     </SafeAreaView>
-
   );
 };
 
@@ -52,15 +62,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f9fa",
   },
   scrollContainer: {
-    padding: 15,
-    paddingBottom: 40,
-  },
-    headerTitle: {
-    fontSize: 26,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-    color: "#333",
+    padding: 10,
+    paddingBottom: 80, // BottomBar'ın üstünü kapatmaması için
   },
   grid: {
     flexDirection: "row",
@@ -71,21 +74,24 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "48%",
     borderRadius: 15,
-    marginBottom: 10,
-    elevation: 4,
+    marginBottom: 15,
+    elevation: 3,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    overflow: "hidden",
   },
   image: {
     width: "100%",
-    height: 160,
-    resizeMode: "cover",
+    height: 150,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  info: {
+    padding: 10,
   },
   infoContainer: {
-    padding: 12,
+    marginBottom: 8,
   },
   title: {
     fontSize: 14,
@@ -93,48 +99,30 @@ const styles = StyleSheet.create({
     color: "#2c3e50",
   },
   fiyat: {
-    fontSize: 10,
+    fontSize: 13,
     color: "#27ae60",
-    fontWeight: "600",
-    marginTop: 4,
-    marginBottom: 10,
+    fontWeight: "700",
+    marginTop: 2,
+  },
+  actionRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 5,
+  },
+  favButton: {
+    padding: 5,
   },
   button: {
     backgroundColor: "#4A90E2",
-    paddingVertical: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
     borderRadius: 8,
-    alignItems: "center",
   },
   buttonText: {
     color: "white",
-    fontSize: 11,
-    fontWeight: "bold",
-  },
-  altbar: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 15,
-    backgroundColor: "#fff",
-    borderTopWidth: 1,
-    borderColor: "#eee",
-    marginTop: 10,
-    marginBottom: 10,
-    marginHorizontal: 15,
-    borderRadius: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 10,
-  },
-  altbarButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  altbarText: {
-    color: "#4A90E2",
     fontSize: 12,
-      fontWeight: "bold",
+    fontWeight: "bold",
   },
 });
 
